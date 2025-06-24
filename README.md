@@ -13,7 +13,7 @@ pip install -r requirements.txt
 from wakeword_detector import WakeWordDetector
 
 # Create the detector
-detector = WakeWordDetector(threshold=0.5)
+detector = WakeWordDetector(['alexa'], threshold=0.5)
 
 # Define an action
 def on_wake(word, score):
