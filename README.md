@@ -1,5 +1,5 @@
 # keyword-detection-tool
-This tool detect keyword in real time and trigger any other function for implement into the Commpanion project.
+This tool detects keywords in real time and triggers any other function to implement into the Companion project.
 
 ## Installation
 
@@ -7,85 +7,78 @@ This tool detect keyword in real time and trigger any other function for impleme
 pip install -r requirements.txt
 ```
 
-### Prérequis pour PyAudio (Windows avec Qualcomm X Plus)
-```bash
-# Si erreur avec PyAudio, installer via:
-pip install pipwin
-pipwin install pyaudio
-```
-
-## Utilisation rapide
+## Quick Usage
 
 ```python
 from wakeword_detector import WakeWordDetector
 
-# Créer le détecteur
+# Create the detector
 detector = WakeWordDetector(threshold=0.5)
 
-# Définir une action
+# Define an action
 def on_wake(word, score):
-    print(f"Détecté: {word}")
+    print(f"Detected: {word}")
 
-# Enregistrer l'action
+# Register the action
 detector.register_callback('alexa', on_wake)
 
-# Démarrer l'écoute
+# Start listening
 detector.start()
 ```
 
-## Structure modulaire
+## Modular Structure
 
 ```
 .
-├── wakeword_detector.py   # Module principal
-├── test_wakeword.py       # Script de test
-├── requirements.txt       # Dépendances
-└── models/               # Dossier pour modèles custom (optionnel)
+├── wakeword_detector.py   # Main module
+├── test_wakeword.py       # Test script
+├── requirements.txt       # Dependencies
+└── models/               # Folder for custom models (optional)
     └── hey_companion.onnx
 ```
 
-## Test
+## Testing
 
-Lancer le script de test :
+Run the test script:
 ```bash
 python test_wakeword.py
 ```
 
-## Personnalisation
+## Customization
 
-### Créer un modèle personnalisé
+### Creating a custom model
 
-1. Enregistrer des échantillons audio de votre phrase
-2. Utiliser [openWakeWord training](https://github.com/dscripka/openWakeWord#training-new-models)
-3. Placer le modèle `.onnx` dans `models/`
+1. Record audio samples of your phrase
+2. Use [openWakeWord training](https://github.com/dscripka/openWakeWord#training-new-models)
+3. Place the `.onnx` model in `models/`
 
-### Modifier le seuil de détection
+### Modifying detection threshold
 
-- `threshold=0.3` : Sensible (plus de détections)
-- `threshold=0.5` : Équilibré (défaut)
-- `threshold=0.7` : Strict (moins de faux positifs)
+- `threshold=0.3`: Sensitive (more detections)
+- `threshold=0.5`: Balanced (default)
+- `threshold=0.7`: Strict (fewer false positives)
 
 ## Architecture
 
-Le système est conçu de manière modulaire :
+The system is designed modularly:
 
-- **WakeWordDetector** : Classe principale gérant la détection
-- **Callbacks** : Actions déclenchées lors de détections
-- **Thread séparé** : Traitement audio non-bloquant
-- **Queue** : Communication thread-safe
+- **WakeWordDetector**: Main class managing detection
+- **Callbacks**: Actions triggered upon detections
+- **Separate thread**: Non-blocking audio processing
+- **Queue**: Thread-safe communication
 
-## Exemple d'intégration
+## Integration Example
 
 ```python
-# Intégration avec assistant vocal
+# Integration with voice assistant
 def activate_assistant(word, score):
-    # 1. Jouer son de confirmation
+    # 1. Play confirmation sound
     play_sound("ding.wav")
     
-    # 2. Démarrer STT
+    # 2. Start STT
     text = speech_to_text()
     
-    # 3. Traiter la commande
+    # 3. Process command
     process_command(text)
 
 detector.register_callback('hey_companion', activate_assistant)
@@ -93,10 +86,10 @@ detector.register_callback('hey_companion', activate_assistant)
 
 ## Performance
 
-- CPU usage : ~5-10% sur Qualcomm X Plus
-- RAM : ~100MB
-- Latence : <100ms
+- CPU usage: ~5-10% on Qualcomm X Plus
+- RAM: ~100MB
+- Latency: <100ms
 
-## Licence
+## License
 
-GNUv3
+GPLv3
